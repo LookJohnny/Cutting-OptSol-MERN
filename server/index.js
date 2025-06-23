@@ -8,7 +8,7 @@ const path = require('path');
 console.log('🚀 正在执行 index.js 文件');
 
 const app = express();
-const PORT = process.env.PORT || 3001; // 兼容 Render 或 Heroku 环境变量
+const PORT = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -54,12 +54,11 @@ app.post('/api/optimize', (req, res) => {
   }
 });
 
-// ⬇️ 支持前端打包后部署
-app.use(express.static(path.join(__dirname, '../client/build')));
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'));
-});
+// ✅ 删掉这两行（它们是部署前端用的）
+// app.use(express.static(path.join(__dirname, '../client/build')));
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, '../client/build/index.html'));
+// });
 
 app.listen(PORT, () => {
   console.log(`✅ 后端服务器已启动：http://localhost:${PORT}`);
